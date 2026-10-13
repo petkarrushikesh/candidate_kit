@@ -15,7 +15,7 @@ The findings below refer to the original starter `app/main.py`. I compared its b
 | 9 | Missing routes | The starter does not implement punch-out, regularization, any of the four analytics routes, or the explain route. | Request any of these documented paths; the starter returns 404. | Implemented the routes and their contract-specific validation, aggregation, history, and response behavior in `app/main.py`. |
 | 10 | Added `/admin/explain/{endpoint}` response | MongoDB explain documents may contain BSON values such as `Timestamp` that FastAPI's default encoder cannot serialize. | Call a valid explain endpoint and observe a serialization error when BSON-only values are present. | Convert the explain result through `bson.json_util.dumps()` and `json.loads()` before returning it. |
 
-## Gemini suggestions checked
+##  Problem statement checked
 
 - **`fail422` positional arguments:** Not a defect. `HTTPException(422, message)` passes `status_code` and `detail` positionally; named arguments are clearer but do not prevent a 500.
 - **Explain `limit: 0`:** Not a defect by itself. MongoDB documents `limit: 0` as unbounded behavior. The current helper omits zero/unspecified skip and limit values anyway. See the [MongoDB find command reference](https://www.mongodb.com/docs/manual/reference/command/find/).
